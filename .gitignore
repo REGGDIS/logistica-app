@@ -1,8 +1,28 @@
 HELP.md
+
+# Archivos de compilación de Maven
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+
+# Archivos generados por Java
+*.class
+
+# Archivos de log
+*.log
+
+# Archivos temporales
+*.tmp
+*.swp
+*.bak
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+desktop.ini
 
 ### STS ###
 .apt_generated
@@ -14,10 +34,11 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
+out/
 
 ### NetBeans ###
 /nbproject/private/
@@ -31,3 +52,14 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Archivos de configuración locales y envs
+*.env
+*.local
+*.config
+
+# Otros formatos de exportación
+*.war
+*.ear
+*.zip
+*.tar.gz
