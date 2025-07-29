@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Listado de Paquetes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Gestión de Paquetes</h2>
+
+    <div class="table-responsive">
+        <table class="table table-bodered table-hover table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Descripción</th>
+                    <th>Destinatario</th>
+                    <th>Dirección de Entrega</th>
+                    <th>Ruta</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="paquete : ${paquetes}">
+                    <td th:text="${paquete.id}">1</td>
+                    <td th:text="${paquete.descripcion}">Ejemplo</td>
+                    <td th:text="${paquete.destinatario}">Juan Pérez</td>
+                    <td th:text="${paquete.direccionEntrega}">Calle Falsa 123</td>
+                    <td th:text="${paquete.ruta != null ? paquete.ruta.origen + ' -> ' + paquete.ruta.destino : 'No asignada'}">Santiago -> Valparaíso</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
