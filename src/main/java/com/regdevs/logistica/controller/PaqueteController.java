@@ -54,4 +54,10 @@ public class PaqueteController {
         paqueteService.guardar(paquete); // El metodo guardar() actualiza si ya tiene ID
         return "redirect:/paquetes";
     }
+
+    @PostMapping("/paquetes/eliminar/{id}")
+    public String eliminarPaquete(@PathVariable Long id) {
+        paqueteService.eliminar(id);
+        return "redirect:/paquetes";
+    }
 }
