@@ -103,4 +103,4 @@ Actualmente el sistema cuenta con las siguientes entidades:
 
 ## 📌 Licencia
 
-Este proyecto está licenciado bajo la **MIT License**. Consulta el archivo `LICENSE` para más información.
+Este proyecto está licenciado bajo la **MIT License**. Consulta el archivo [`LICENSE`](LICENSE) para más información.
