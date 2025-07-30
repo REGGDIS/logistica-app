@@ -9,7 +9,9 @@
 <div class="container mt-4">
     <h2 class="mb-4 text-center">Registrar Nuevo Paquete</h2>
 
-    <form th:action="@{/paquetes/guardar}" th:object="${paquete}" method="post">
+    <form th:action="${paquete.id} != null ? @{/paquetes/actualizar} : @{/paquetes/guardar}" th:object="${paquete}" method="post">
+        <input type="hidden" th:field="*{id}" />
+
         <div class="mb-3">
             <label for="descripcion" class="form-label">Descripcion</label>
             <input id="descripcion" type="text" th:field="*{descripcion}" class="form-control" required />

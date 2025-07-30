@@ -15,7 +15,7 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-bodered table-hover table-striped">
+        <table class="table table-bodered table-hover table-striped text-center">
             <thead class="table-dark">
                 <tr>
                     <th>ID</th>
@@ -23,6 +23,7 @@
                     <th>Destinatario</th>
                     <th>Dirección de Entrega</th>
                     <th>Ruta</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,6 +33,9 @@
                     <td th:text="${paquete.destinatario}">Juan Pérez</td>
                     <td th:text="${paquete.direccionEntrega}">Calle Falsa 123</td>
                     <td th:text="${paquete.ruta != null ? paquete.ruta.origen + ' -> ' + paquete.ruta.destino : 'No asignada'}">Santiago -> Valparaíso</td>
+                    <td>
+                        <a th:href="@{/paquetes/editar/{id}(id=${paquete.id})}" class="btn btn-sm btn-warning">Editar</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
