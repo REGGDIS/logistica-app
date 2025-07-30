@@ -2,6 +2,7 @@ package com.regdevs.logistica.controller;
 
 import com.regdevs.logistica.model.Paquete;
 import com.regdevs.logistica.service.PaqueteService;
+import com.regdevs.logistica.service.RutaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,9 @@ public class PaqueteController {
     @Autowired
     private PaqueteService paqueteService;
 
+    @Autowired
+    private RutaService rutaService;
+
     @GetMapping("/paquetes")
     public String listarPaquetes(Model model) {
         List<Paquete> listaPaquetes = paqueteService.listarTodos();
@@ -29,6 +33,7 @@ public class PaqueteController {
     @GetMapping("/paquetes/nuevo")
     public String mostrarFormularioNuevoPaquete(Model model) {
         model.addAttribute("paquete", new Paquete());
+        model.addAttribute("rutas", rutaService.listarTodas());
         return "formulario-paquete";
     }
 
@@ -37,6 +42,7 @@ public class PaqueteController {
         Optional<Paquete> paqueteOptional = paqueteService.buscarPorId(id);
         if (paqueteOptional.isPresent()) {
             model.addAttribute("paquete", paqueteOptional.get());
+            model.addAttribute("rutas", rutaService.listarTodas());
             return "formulario-paquete";
         } else {
             return "redirect:/paquetes"; // En caso de que no exista el ID
@@ -45,12 +51,20 @@ public class PaqueteController {
 
     @PostMapping("/paquetes/guardar")
     public String guardarPaquete(@ModelAttribute("paquete") Paquete paquete) {
+        if (paquete.getRuta() != null && paquete.getRuta().getId() != null) {
+            // Busca la Ruta completa desde la base de datos
+            paquete.setRuta(rutaService.buscarPorId(paquete.getRuta().getId()).orElse(null));
+        }
         paqueteService.guardar(paquete);
         return "redirect:/paquetes";
     }
 
     @PostMapping("/paquetes/actualizar")
-    public String actualizarPAquete(@ModelAttribute("paquete") Paquete paquete) {
+    public String actualizarPaquete(@ModelAttribute("paquete") Paquete paquete) {
+        if (paquete.getRuta() != null && paquete.getRuta().getId() != null) {
+            // Busca la Ruta completa desde la base de datos
+            paquete.setRuta(rutaService.buscarPorId(paquete.getRuta().getId()).orElse(null));
+        }
         paqueteService.guardar(paquete); // El metodo guardar() actualiza si ya tiene ID
         return "redirect:/paquetes";
     }

@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="container mt-4">
-    <h2 class="mb-4 text-center">Registrar Nuevo Paquete</h2>
+    <h2 class="mb-4 text-center" th:text="${paquete.id} != null ? 'Editar Paquete' : 'Registrar Nuevo Paquete'">Registrar Nuevo Paquete</h2>
 
     <form th:action="${paquete.id} != null ? @{/paquetes/actualizar} : @{/paquetes/guardar}" th:object="${paquete}" method="post">
         <input type="hidden" th:field="*{id}" />
@@ -25,6 +25,23 @@
         <div class="mb-3">
             <label for="direccionEntrega" class="form-label">Dirección de Entrega</label>
             <input id="direccionEntrega" type="text" th:field="*{direccionEntrega}" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="ruta" class="form-label">Ruta</label>
+            <select id="ruta" th:field="*{ruta}" class="form-select" required>
+                <option value="" disabled
+                        th:if="${paquete.ruta == null}"
+                        selected
+                        th:remove="${paquete.ruta != null} ? 'all' : 'none'">
+                    Selecciona una ruta
+                </option>
+                <option th:each="ruta : ${rutas}"
+                        th:value="${ruta.id}"
+                        th:text="${ruta.origen + ' -> ' + ruta.destino}"
+                        th:selected="${ruta.id == paquete.ruta?.id}">
+                </option>
+            </select>
         </div>
 
         <div class="text-end">

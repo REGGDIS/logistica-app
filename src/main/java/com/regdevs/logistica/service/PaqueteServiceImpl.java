@@ -1,7 +1,9 @@
 package com.regdevs.logistica.service;
 
 import com.regdevs.logistica.model.Paquete;
+import com.regdevs.logistica.model.Ruta;
 import com.regdevs.logistica.repository.PaqueteRepository;
+import com.regdevs.logistica.repository.RutaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
