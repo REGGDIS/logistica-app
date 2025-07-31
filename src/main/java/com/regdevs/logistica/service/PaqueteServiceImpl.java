@@ -23,7 +23,7 @@ public class PaqueteServiceImpl implements PaqueteService {
 
     @Override
     public Optional<Paquete> buscarPorId(Long id) {
-        return paqueteRepository.findById(id);
+        return paqueteRepository.buscarPorIdConHistorial(id);
     }
 
     @Override

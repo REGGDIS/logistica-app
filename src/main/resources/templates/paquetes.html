@@ -15,7 +15,7 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-bodered table-hover table-striped text-center">
+        <table class="table table-bordered table-hover table-striped text-center">
             <thead class="table-dark">
                 <tr>
                     <th>ID</th>
@@ -37,8 +37,10 @@
                         <a th:href="@{/paquetes/editar/{id}(id=${paquete.id})}" class="btn btn-sm btn-warning">Editar</a>
 
                         <form th:action="@{/paquetes/eliminar/{id}(id=${paquete.id})}" method="post" th:onsubmit="return confirm('¿Estás seguro de que deseas eliminar este paquete?')" style="display:inline;">
-                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                            <button type="submit" class="btn btn-danger btn-sm mb-1">Eliminar</button>
                         </form>
+
+                        <a th:href="@{/paquetes/detalle/{id}(id=${paquete.id})}" class="btn btn-info btn-sm">Ver Detalle</a>
                     </td>
                 </tr>
             </tbody>

@@ -49,6 +49,19 @@ public class PaqueteController {
         }
     }
 
+    @GetMapping("/paquetes/detalle/{id}")
+    public String verDetallePaquete(@PathVariable Long id, Model model) {
+        Optional<Paquete> paqueteOptional = paqueteService.buscarPorId(id);
+        if (paqueteOptional.isPresent()) {
+            Paquete paquete = paqueteOptional.get();
+            model.addAttribute("paquete", paquete);
+            model.addAttribute("historial", paquete.getHistorial());
+            return "detalle-paquete";
+        } else {
+            return "redirect:/paquetes";
+        }
+    }
+
     @PostMapping("/paquetes/guardar")
     public String guardarPaquete(@ModelAttribute("paquete") Paquete paquete) {
         if (paquete.getRuta() != null && paquete.getRuta().getId() != null) {
