@@ -34,17 +34,41 @@
                     <th>Fecha</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody th:if="${historial != null and !historial.isEmpty()}">
                 <tr th:each="estado : ${historial}">
                     <td th:text="${estado.estado}">En tránsito</td>
                     <td th:text="${estado.fecha}">2025-07-31</td>
                 </tr>
-                <tr th:if="${historial.size() == 0}">
+            </tbody>
+            <tbody th:if="${historial == null or historial.isEmpty()}">
+                <tr>
                     <td colspan="2">Este paquete no tiene historial de envío registrado.</td>
                 </tr>
             </tbody>
         </table>
     </div>
+
+    <h5 class="mt-5">Registrar nuevo Estado de Envío</h5>
+    <form th:action="@{/estados/guardar}" method="post" class="row g-3">
+        <div class="col-md-6">
+            <label for="estado" class="form-label">Estado</label>
+            <select class="form-select" id="estado" name="estado" required>
+                <option value="" disabled selected>Seleccionar estado</option>
+                <option th:each="estado : ${estadosDisponibles}"
+                        th:value="${estado}"
+                        th:text="${estado}">
+                </option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="fecha" class="form-label">Fecha</label>
+            <input type="date" class="form-control" id="fecha" name="fecha" required>
+        </div>
+        <input type="hidden" name="paqueteId" th:value="${paquete.id}">
+        <div class="col-12 text-end">
+            <button type="submit" class="btn btn-primary">Agregar Estado</button>
+        </div>
+    </form>
 
     <div class="mt-4 text-end">
         <a th:href="@{/paquetes}" class="btn btn-secondary">Volver al listado</a>

@@ -1,6 +1,8 @@
 package com.regdevs.logistica.controller;
 
+import com.regdevs.logistica.model.EstadoEnvio;
 import com.regdevs.logistica.model.Paquete;
+import com.regdevs.logistica.service.EstadoEnvioService;
 import com.regdevs.logistica.service.PaqueteService;
 import com.regdevs.logistica.service.RutaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +25,9 @@ public class PaqueteController {
 
     @Autowired
     private RutaService rutaService;
+
+    @Autowired
+    private EstadoEnvioService estadoEnvioService;
 
     @GetMapping("/paquetes")
     public String listarPaquetes(Model model) {
@@ -55,7 +61,15 @@ public class PaqueteController {
         if (paqueteOptional.isPresent()) {
             Paquete paquete = paqueteOptional.get();
             model.addAttribute("paquete", paquete);
-            model.addAttribute("historial", paquete.getHistorial());
+            // Obtiene historial ordenado por fecha descendente
+            List<EstadoEnvio> historial = estadoEnvioService.buscarPorPaqueteIdOrdenado(paquete.getId());
+            model.addAttribute("historial", historial);
+
+            // Lista de estados disponibles
+            List<String> estadosDisponibles = Arrays.asList(
+                    "En tránsito", "En bodega", "En reparto", "Entregado", "Rechazado"
+            );
+            model.addAttribute("estadosDisponibles", estadosDisponibles);
             return "detalle-paquete";
         } else {
             return "redirect:/paquetes";

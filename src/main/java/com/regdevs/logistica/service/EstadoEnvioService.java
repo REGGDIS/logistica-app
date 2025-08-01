@@ -10,4 +10,5 @@ public interface EstadoEnvioService {
     Optional<EstadoEnvio> buscarPorId(Long id);
     EstadoEnvio guardar(EstadoEnvio estado);
     void eliminar(Long id);
+    List<EstadoEnvio> buscarPorPaqueteIdOrdenado(Long paqueteId);
 }

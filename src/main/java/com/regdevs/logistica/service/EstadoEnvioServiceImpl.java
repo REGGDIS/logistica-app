@@ -33,4 +33,9 @@ public class EstadoEnvioServiceImpl implements EstadoEnvioService {
     public void eliminar(Long id) {
         estadoEnvioRepository.deleteById(id);
     }
+
+    @Override
+    public List<EstadoEnvio> buscarPorPaqueteIdOrdenado(Long paqueteId) {
+        return estadoEnvioRepository.findByPaqueteIdOrderByFechaDesc(paqueteId);
+    }
 }
