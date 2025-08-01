@@ -12,26 +12,30 @@ Este es un sistema web CRUD desarrollado con **Spring Boot**, **Thymeleaf** y **
 - ✅ Editar información de paquetes
 - ✅ Eliminar paquetes
 - ✅ Asignar rutas a paquetes
+- ✅ Ver detalles de un paquete individual
+- ✅ Registrar historial de estados de envío (con estado y fecha)
+- ✅ Visualizar el historial completo de cada paquete en su vista de detalle
+- ✅ Validación de estados mediante lista desplegable predefinida
 
 ---
 
 ## 🖼️ Capturas de Pantalla
 
-### 📄 Captura 1
+### 📦 Lista Paquetes
 
-![Imagen-PorSubir](imagen-proxima-a-subir.png)
-
----
-
-### ➕ Captura 2
-
-![Imagen-PorSubir](imagen-proxima-a-subir.png)
+![Lista-Paquetes](screenshots/lista-paquetes.png)
 
 ---
 
-### 🌐 Captura 3
+### ✏️ Edición de Paquete
 
-![Imagen-PorSubir](imagen-proxima-a-subir.png)
+![Edicion-Paquete](screenshots/detalle-paquete.png)
+
+---
+
+### 📨 Estado de Envío
+
+![Estado-Envio](screenshots/formulario-estado.png)
 
 ---
 

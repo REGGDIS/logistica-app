@@ -34,13 +34,20 @@
                     <td th:text="${paquete.direccionEntrega}">Calle Falsa 123</td>
                     <td th:text="${paquete.ruta != null ? paquete.ruta.origen + ' -> ' + paquete.ruta.destino : 'No asignada'}">Santiago -> Valparaíso</td>
                     <td>
-                        <a th:href="@{/paquetes/editar/{id}(id=${paquete.id})}" class="btn btn-sm btn-warning">Editar</a>
+                        <div class="d-flex justify-content-center align-items-center gap-2 flex-wrap">
+                            <a th:href="@{/paquetes/editar/{id}(id=${paquete.id})}"
+                               class="btn btn-sm btn-warning" style="min-width: 100px">Editar</a>
 
-                        <form th:action="@{/paquetes/eliminar/{id}(id=${paquete.id})}" method="post" th:onsubmit="return confirm('¿Estás seguro de que deseas eliminar este paquete?')" style="display:inline;">
-                            <button type="submit" class="btn btn-danger btn-sm mb-1">Eliminar</button>
-                        </form>
+                            <form th:action="@{/paquetes/eliminar/{id}(id=${paquete.id})}"
+                                  method="post"
+                                  th:onsubmit="return confirm('¿Estás seguro de que deseas eliminar este paquete?')"
+                                  class="m-0 p-0">
+                                <button type="submit" class="btn btn-danger btn-sm" style="min-width: 100px">Eliminar</button>
+                            </form>
 
-                        <a th:href="@{/paquetes/detalle/{id}(id=${paquete.id})}" class="btn btn-info btn-sm">Ver Detalle</a>
+                            <a th:href="@{/paquetes/detalle/{id}(id=${paquete.id})}"
+                               class="btn btn-info btn-sm text-white" style="min-width: 100px">Ver Detalle</a>
+                        </div>
                     </td>
                 </tr>
             </tbody>
