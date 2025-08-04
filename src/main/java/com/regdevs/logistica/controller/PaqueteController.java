@@ -76,6 +76,11 @@ public class PaqueteController {
         }
     }
 
+    @GetMapping("/")
+    public String redirigir() {
+        return "redirect:/paquetes";
+    }
+
     @PostMapping("/paquetes/guardar")
     public String guardarPaquete(@ModelAttribute("paquete") Paquete paquete) {
         if (paquete.getRuta() != null && paquete.getRuta().getId() != null) {
