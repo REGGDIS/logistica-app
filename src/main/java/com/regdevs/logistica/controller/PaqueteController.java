@@ -58,8 +58,8 @@ public class PaqueteController {
         return ResponseEntity
                 .ok()
                 .headers(headers)
-                .contentType((org.springframework.http.MediaType) MediaType.APPLICATION_PDF)
-                .body(new InputStreamResource((java.io.InputStream) bis));
+                .contentType(java.util.Objects.requireNonNull(MediaType.APPLICATION_PDF))
+                .body(new InputStreamResource(java.util.Objects.requireNonNull((java.io.InputStream) bis)));
     }
 
     @GetMapping("/paquetes/qr/{id}")
@@ -70,7 +70,7 @@ public class PaqueteController {
 
         return ResponseEntity
                 .ok()
-                .contentType(MediaType.IMAGE_PNG)
+                .contentType(java.util.Objects.requireNonNull(MediaType.IMAGE_PNG))
                 .body(qr);
     }
 

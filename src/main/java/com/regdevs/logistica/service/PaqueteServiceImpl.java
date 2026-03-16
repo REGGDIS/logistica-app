@@ -27,14 +27,14 @@ public class PaqueteServiceImpl implements PaqueteService {
 
     @Override
     public Paquete guardar(Paquete paquete) {
-        return paqueteRepository.save(paquete);
+        return paqueteRepository.save(java.util.Objects.requireNonNull(paquete));
     }
 
     @Override
     public void eliminar(Long id) {
         if (id != null) {
             paqueteRepository.findById(id).ifPresent(paquete -> {
-                paqueteRepository.delete(paquete);
+                paqueteRepository.delete(java.util.Objects.requireNonNull(paquete));
             });
         }
     }

@@ -27,7 +27,7 @@ public class RutaServiceImpl implements RutaService {
 
     @Override
     public Ruta guardar(Ruta ruta) {
-        return rutaRepository.save(ruta);
+        return rutaRepository.save(java.util.Objects.requireNonNull(ruta));
     }
 
     @Override

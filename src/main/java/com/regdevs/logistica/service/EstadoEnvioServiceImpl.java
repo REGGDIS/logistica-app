@@ -27,7 +27,7 @@ public class EstadoEnvioServiceImpl implements EstadoEnvioService {
 
     @Override
     public EstadoEnvio guardar(EstadoEnvio estado) {
-        return estadoEnvioRepository.save(estado);
+        return estadoEnvioRepository.save(java.util.Objects.requireNonNull(estado));
     }
 
     @Override
