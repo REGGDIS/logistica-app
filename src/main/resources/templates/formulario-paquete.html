@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Nuevo Paquete</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 </head>
 <body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
 <div class="container mt-4">
     <h2 class="mb-4 text-center" th:text="${paquete.id} != null ? 'Editar Paquete' : 'Registrar Nuevo Paquete'">Registrar Nuevo Paquete</h2>
 
@@ -31,6 +35,11 @@
         <div class="mb-3">
             <label for="direccionEntrega" class="form-label">Dirección de Entrega</label>
             <input id="direccionEntrega" type="text" th:field="*{direccionEntrega}" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="emailDestinatario" class="form-label">Email del Destinatario (para notificaciones)</label>
+            <input id="emailDestinatario" type="email" th:field="*{emailDestinatario}" class="form-control" />
         </div>
 
         <div class="mb-3">

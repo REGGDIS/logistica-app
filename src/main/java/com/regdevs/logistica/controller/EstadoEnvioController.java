@@ -24,6 +24,9 @@ public class EstadoEnvioController {
     @Autowired
     private PaqueteService paqueteService;
 
+    @Autowired
+    private com.regdevs.logistica.service.NotificacionService notificacionService;
+
     @PostMapping("/guardar")
     public String guardarEstado(@RequestParam("estado") String estadoStr,
                                 @RequestParam("fecha") String fechaStr,
@@ -46,6 +49,17 @@ public class EstadoEnvioController {
             nuevoEstado.setPaquete(paqueteOpt.get());
 
             estadoEnvioService.guardar(nuevoEstado);
+
+            // Enviar notificación por email
+            Paquete p = paqueteOpt.get();
+            if (p.getEmailDestinatario() != null && !p.getEmailDestinatario().isEmpty()) {
+                notificacionService.enviarNotificacionCambioEstado(
+                    p.getEmailDestinatario(), 
+                    p.getDescripcion(), 
+                    estado.getDescripcion()
+                );
+            }
+
             redirectAttributes.addFlashAttribute("success", "Estado actualizado correctamente.");
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("error", "Estado de envío no válido.");

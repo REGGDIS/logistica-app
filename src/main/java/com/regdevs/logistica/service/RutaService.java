@@ -10,4 +10,5 @@ public interface RutaService {
     Optional<Ruta> buscarPorId(Long id);
     Ruta guardar(Ruta ruta);
     void eliminar(Long id);
+    long contarTodas();
 }

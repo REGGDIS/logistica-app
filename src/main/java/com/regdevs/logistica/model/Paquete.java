@@ -15,6 +15,8 @@ public class Paquete {
     private String destinatario;
     private String direccionEntrega;
 
+    private String emailDestinatario;
+
     @ManyToOne
     @JoinColumn(name = "ruta_id")
     private Ruta ruta;
@@ -46,6 +48,14 @@ public class Paquete {
 
     public void setDestinatario(String destinatario) {
         this.destinatario = destinatario;
+    }
+
+    public String getEmailDestinatario() {
+        return emailDestinatario;
+    }
+
+    public void setEmailDestinatario(String emailDestinatario) {
+        this.emailDestinatario = emailDestinatario;
     }
 
     public String getDireccionEntrega() {

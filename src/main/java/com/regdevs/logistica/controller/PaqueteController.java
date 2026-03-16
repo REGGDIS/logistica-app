@@ -1,7 +1,6 @@
 package com.regdevs.logistica.controller;
 
 import com.regdevs.logistica.model.EstadoEnum;
-import com.regdevs.logistica.model.EstadoEnvio;
 import com.regdevs.logistica.model.Paquete;
 import com.regdevs.logistica.service.EstadoEnvioService;
 import com.regdevs.logistica.service.PaqueteService;
@@ -13,10 +12,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import java.io.ByteArrayInputStream;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -31,11 +35,43 @@ public class PaqueteController {
     @Autowired
     private EstadoEnvioService estadoEnvioService;
 
+    @Autowired
+    private com.regdevs.logistica.service.ReporteService reporteService;
+
+    @Autowired
+    private com.regdevs.logistica.service.QrCodeService qrCodeService;
+
     @GetMapping("/paquetes")
     public String listarPaquetes(Model model) {
-        List<Paquete> listaPaquetes = paqueteService.listarTodos();
-        model.addAttribute("paquetes", listaPaquetes);
-        return "paquetes"; // Nombre del archivo .html en /templates
+        model.addAttribute("paquetes", paqueteService.listarTodosDTO());
+        return "paquetes";
+    }
+
+    @GetMapping("/paquetes/reporte")
+    public ResponseEntity<InputStreamResource> descargarReporte() {
+        java.util.List<com.regdevs.logistica.dto.PaqueteDTO> paquetes = paqueteService.listarTodosDTO();
+        ByteArrayInputStream bis = reporteService.generarReportePaquetes(paquetes);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=reporte-paquetes.pdf");
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType((org.springframework.http.MediaType) MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource((java.io.InputStream) bis));
+    }
+
+    @GetMapping("/paquetes/qr/{id}")
+    @ResponseBody
+    public ResponseEntity<byte[]> obtenerQrPaquete(@PathVariable("id") Long id) {
+        byte[] qr = qrCodeService.generarQrPaquete(String.valueOf(id));
+        if (qr == null) return ResponseEntity.internalServerError().build();
+
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.IMAGE_PNG)
+                .body(qr);
     }
 
     @GetMapping("/paquetes/nuevo")
@@ -59,15 +95,10 @@ public class PaqueteController {
 
     @GetMapping("/paquetes/detalle/{id}")
     public String verDetallePaquete(@PathVariable Long id, Model model) {
-        Optional<Paquete> paqueteOptional = paqueteService.buscarPorId(id);
-        if (paqueteOptional.isPresent()) {
-            Paquete paquete = paqueteOptional.get();
-            model.addAttribute("paquete", paquete);
-            // Obtiene historial ordenado por fecha descendente
-            List<EstadoEnvio> historial = estadoEnvioService.buscarPorPaqueteIdOrdenado(paquete.getId());
-            model.addAttribute("historial", historial);
-
-            // Lista de estados disponibles (usando el Enum)
+        com.regdevs.logistica.dto.PaqueteDTO paqueteDTO = paqueteService.buscarPorIdDTO(id);
+        if (paqueteDTO != null) {
+            model.addAttribute("paquete", paqueteDTO);
+            model.addAttribute("historial", estadoEnvioService.buscarPorPaqueteIdOrdenado(id));
             model.addAttribute("estadosDisponibles", EstadoEnum.values());
             return "detalle-paquete";
         } else {
@@ -75,10 +106,6 @@ public class PaqueteController {
         }
     }
 
-    @GetMapping("/")
-    public String redirigir() {
-        return "redirect:/paquetes";
-    }
 
     @PostMapping("/paquetes/guardar")
     public String guardarPaquete(@ModelAttribute("paquete") Paquete paquete, RedirectAttributes redirectAttributes) {

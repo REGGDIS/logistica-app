@@ -36,4 +36,9 @@ public class RutaServiceImpl implements RutaService {
             rutaRepository.deleteById(id);
         }
     }
+
+    @Override
+    public long contarTodas() {
+        return rutaRepository.count();
+    }
 }

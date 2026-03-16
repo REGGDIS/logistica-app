@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,16 +28,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="/">
-            <i class="bi bi-box-seam me-2"></i>Logística App
-        </a>
-        <div class="navbar-nav ms-auto">
-            <a class="nav-link" href="/paquetes">Gestionar Paquetes</a>
-        </div>
-    </div>
-</nav>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <header class="hero-section text-center">
     <div class="container">
@@ -48,6 +39,39 @@
 </header>
 
 <main class="container">
+    <!-- Sección de Estadísticas -->
+    <div class="row mb-5">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white shadow-sm border-0 h-100">
+                <div class="card-body text-center d-flex flex-column justify-content-center">
+                    <h6 class="text-uppercase mb-2 opacity-75">Total Paquetes</h6>
+                    <h2 class="display-6 fw-bold mb-0" th:text="${totalPaquetes}">0</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white shadow-sm border-0 h-100">
+                <div class="card-body text-center d-flex flex-column justify-content-center">
+                    <h6 class="text-uppercase mb-2 opacity-75">Rutas Activas</h6>
+                    <h2 class="display-6 fw-bold mb-0" th:text="${totalRutas}">0</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h6 class="text-uppercase mb-3 text-muted">Distribución de Estados</h6>
+                    <div class="d-flex flex-wrap gap-2">
+                        <div th:each="estado : ${estados}" class="badge rounded-pill bg-light text-dark border p-2 px-3">
+                            <span th:text="${estado.descripcion}">Estado</span>: 
+                            <span class="fw-bold" th:text="${stats.get(estado.name())}">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row text-center g-4">
         <div class="col-md-4">
             <div class="card h-100 border-0 shadow-sm hover-card">
@@ -84,7 +108,7 @@
 
 <footer class="mt-5 py-4 bg-white border-top text-center text-muted">
     <div class="container">
-        <p class="mb-0">&copy; 2025 Logística App - Sistema de Gestión de Envíos</p>
+        <p class="mb-0">&copy; 2026 Logística App - Sistema de Gestión de Envíos</p>
     </div>
 </footer>
 
