@@ -1,10 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Logística App - Sistema de Gestión</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body { background-color: #f8f9fa; }
+        .hero-section {
+            background: linear-gradient(135deg, #0d6efd 0%, #003d99 100%);
+            color: white;
+            padding: 80px 0;
+            margin-bottom: 40px;
+        }
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0d6efd;
+        }
+        .hover-card:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+    </style>
 </head>
 <body>
 
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <i class="bi bi-box-seam me-2"></i>Logística App
+        </a>
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="/paquetes">Gestionar Paquetes</a>
+        </div>
+    </div>
+</nav>
+
+<header class="hero-section text-center">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Gestión Logística Inteligente</h1>
+        <p class="lead mb-4">Optimiza tus envíos, realiza seguimientos en tiempo real y gestiona tus rutas eficientemente.</p>
+        <a href="/paquetes" class="btn btn-light btn-lg px-5 shadow">Comenzar ahora</a>
+    </div>
+</header>
+
+<main class="container">
+    <div class="row text-center g-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm hover-card">
+                <div class="card-body p-5">
+                    <i class="bi bi-plus-circle card-icon"></i>
+                    <h3 class="card-title">Registro Rápido</h3>
+                    <p class="card-text text-muted">Ingresa nuevos paquetes al sistema con todos sus detalles de destino y ruta.</p>
+                    <a href="/paquetes/nuevo" class="btn btn-outline-primary mt-3">Registrar Paquete</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm hover-card">
+                <div class="card-body p-5">
+                    <i class="bi bi-table card-icon"></i>
+                    <h3 class="card-title">Control Total</h3>
+                    <p class="card-text text-muted">Visualiza el listado completo de envíos con sus estados actuales y opciones de edición.</p>
+                    <a href="/paquetes" class="btn btn-outline-primary mt-3">Ver Listado</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm hover-card">
+                <div class="card-body p-5">
+                    <i class="bi bi-geo-alt card-icon"></i>
+                    <h3 class="card-title">Trazabilidad</h3>
+                    <p class="card-text text-muted">Consulta el historial detallado de cada envío desde su origen hasta la entrega final.</p>
+                    <button class="btn btn-outline-secondary mt-3" disabled>Próximamente: Mapas</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="mt-5 py-4 bg-white border-top text-center text-muted">
+    <div class="container">
+        <p class="mb-0">&copy; 2025 Logística App - Sistema de Gestión de Envíos</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

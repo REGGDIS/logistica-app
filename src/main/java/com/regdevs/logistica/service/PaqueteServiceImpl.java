@@ -23,6 +23,7 @@ public class PaqueteServiceImpl implements PaqueteService {
 
     @Override
     public Optional<Paquete> buscarPorId(Long id) {
+        if (id == null) return Optional.empty();
         return paqueteRepository.buscarPorIdConHistorial(id);
     }
 
@@ -33,6 +34,10 @@ public class PaqueteServiceImpl implements PaqueteService {
 
     @Override
     public void eliminar(Long id) {
-        paqueteRepository.deleteById(id);
+        if (id != null) {
+            paqueteRepository.findById(id).ifPresent(paquete -> {
+                paqueteRepository.delete(paquete);
+            });
+        }
     }
 }

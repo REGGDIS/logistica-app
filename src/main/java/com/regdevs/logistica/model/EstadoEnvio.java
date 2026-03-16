@@ -10,11 +10,12 @@ public class EstadoEnvio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String estado; // En tránsito, Entregado, Retrasado, etc.
+    private EstadoEnum estado; // Mapeado por EstadoEnumConverter
     private LocalDate fecha;
 
     @ManyToOne
     @JoinColumn(name = "paquete_id")
+    @org.hibernate.annotations.OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
     private Paquete paquete;
 
     // Getters y setters
@@ -27,11 +28,11 @@ public class EstadoEnvio {
         this.id = id;
     }
 
-    public String getEstado() {
+    public EstadoEnum getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoEnum estado) {
         this.estado = estado;
     }
 

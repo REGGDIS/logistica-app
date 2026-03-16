@@ -21,6 +21,7 @@ public class EstadoEnvioServiceImpl implements EstadoEnvioService {
 
     @Override
     public Optional<EstadoEnvio> buscarPorId(Long id) {
+        if (id == null) return Optional.empty();
         return estadoEnvioRepository.findById(id);
     }
 
@@ -31,7 +32,9 @@ public class EstadoEnvioServiceImpl implements EstadoEnvioService {
 
     @Override
     public void eliminar(Long id) {
-        estadoEnvioRepository.deleteById(id);
+        if (id != null) {
+            estadoEnvioRepository.deleteById(id);
+        }
     }
 
     @Override

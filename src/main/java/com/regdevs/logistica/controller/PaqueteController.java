@@ -1,5 +1,6 @@
 package com.regdevs.logistica.controller;
 
+import com.regdevs.logistica.model.EstadoEnum;
 import com.regdevs.logistica.model.EstadoEnvio;
 import com.regdevs.logistica.model.Paquete;
 import com.regdevs.logistica.service.EstadoEnvioService;
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Arrays;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -65,11 +67,8 @@ public class PaqueteController {
             List<EstadoEnvio> historial = estadoEnvioService.buscarPorPaqueteIdOrdenado(paquete.getId());
             model.addAttribute("historial", historial);
 
-            // Lista de estados disponibles
-            List<String> estadosDisponibles = Arrays.asList(
-                    "En tránsito", "En bodega", "En reparto", "Entregado", "Rechazado"
-            );
-            model.addAttribute("estadosDisponibles", estadosDisponibles);
+            // Lista de estados disponibles (usando el Enum)
+            model.addAttribute("estadosDisponibles", EstadoEnum.values());
             return "detalle-paquete";
         } else {
             return "redirect:/paquetes";
@@ -82,28 +81,25 @@ public class PaqueteController {
     }
 
     @PostMapping("/paquetes/guardar")
-    public String guardarPaquete(@ModelAttribute("paquete") Paquete paquete) {
-        if (paquete.getRuta() != null && paquete.getRuta().getId() != null) {
-            // Busca la Ruta completa desde la base de datos
-            paquete.setRuta(rutaService.buscarPorId(paquete.getRuta().getId()).orElse(null));
+    public String guardarPaquete(@ModelAttribute("paquete") Paquete paquete, RedirectAttributes redirectAttributes) {
+        if (paquete.getDescripcion() == null || paquete.getDescripcion().isBlank()) {
+            redirectAttributes.addFlashAttribute("error", "La descripción es obligatoria.");
+            return "redirect:/paquetes/nuevo";
         }
-        paqueteService.guardar(paquete);
-        return "redirect:/paquetes";
-    }
 
-    @PostMapping("/paquetes/actualizar")
-    public String actualizarPaquete(@ModelAttribute("paquete") Paquete paquete) {
         if (paquete.getRuta() != null && paquete.getRuta().getId() != null) {
-            // Busca la Ruta completa desde la base de datos
             paquete.setRuta(rutaService.buscarPorId(paquete.getRuta().getId()).orElse(null));
         }
-        paqueteService.guardar(paquete); // El metodo guardar() actualiza si ya tiene ID
+        
+        paqueteService.guardar(paquete);
+        redirectAttributes.addFlashAttribute("success", "Paquete guardado correctamente.");
         return "redirect:/paquetes";
     }
 
     @PostMapping("/paquetes/eliminar/{id}")
-    public String eliminarPaquete(@PathVariable Long id) {
+    public String eliminarPaquete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         paqueteService.eliminar(id);
+        redirectAttributes.addFlashAttribute("success", "Paquete eliminado correctamente.");
         return "redirect:/paquetes";
     }
 }

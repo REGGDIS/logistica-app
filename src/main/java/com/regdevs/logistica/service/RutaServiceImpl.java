@@ -21,6 +21,7 @@ public class RutaServiceImpl implements RutaService {
 
     @Override
     public Optional<Ruta> buscarPorId(Long id) {
+        if (id == null) return Optional.empty();
         return rutaRepository.findById(id);
     }
 
@@ -31,6 +32,8 @@ public class RutaServiceImpl implements RutaService {
 
     @Override
     public void eliminar(Long id) {
-        rutaRepository.deleteById(id);
+        if (id != null) {
+            rutaRepository.deleteById(id);
+        }
     }
 }

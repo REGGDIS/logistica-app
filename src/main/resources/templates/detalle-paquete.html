@@ -10,6 +10,16 @@
 <div class="container mt-4">
     <h2 class="mb-4 text-center">Detalle del Paquete</h2>
 
+    <!-- Alertas de retroalimentación -->
+    <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${success}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     <div class="card mb-4">
         <div class="card-body">
             <h5 class="card-title">Información del Paquete</h5>
@@ -36,7 +46,7 @@
             </thead>
             <tbody th:if="${historial != null and !historial.isEmpty()}">
                 <tr th:each="estado : ${historial}">
-                    <td th:text="${estado.estado}">En tránsito</td>
+                    <td th:text="${estado.estado.descripcion}">En tránsito</td>
                     <td th:text="${estado.fecha}">2025-07-31</td>
                 </tr>
             </tbody>
@@ -55,8 +65,8 @@
             <select class="form-select" id="estado" name="estado" required>
                 <option value="" disabled selected>Seleccionar estado</option>
                 <option th:each="estado : ${estadosDisponibles}"
-                        th:value="${estado}"
-                        th:text="${estado}">
+                        th:value="${estado.name()}"
+                        th:text="${estado.descripcion}">
                 </option>
             </select>
         </div>

@@ -10,6 +10,16 @@
 <div class="container mt-4">
     <h2 class="mb-4 text-center">Gestión de Paquetes</h2>
 
+    <!-- Alertas de retroalimentación -->
+    <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${success}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     <div class="mb-3 text-end">
         <a href="/paquetes/nuevo" class="btn btn-success">+ Nuevo Paquete</a>
     </div>
